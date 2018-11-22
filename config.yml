@@ -1,0 +1,35 @@
+---
+
+# █████████████████████████████████████████████████████████████████████████████████████████████
+# █ This is the config file for the bot.                                                      █
+# █ Only the fields marked ■ REQUIRED ■ need to be filled; the rest offer some finer control. █
+# █████████████████████████████████████████████████████████████████████████████████████████████
+
+# ■ REQUIRED ■ Put the client ID (bot's user ID) here.
+id: 
+
+# ■ REQUIRED ■ Put the bot account's token here.
+token: 
+
+# ■ REQUIRED ■ Put the bot's command prefix here.
+prefix: 
+
+# Put the game to set the bot's "Playing" status to here.
+# Leave blank to have no game.
+game: 
+
+# Put the alias of the help command here, i.e. what the help command should be called as.
+# Leave blank to disable the help command (e.g. if you have a custom implementation).
+help_alias: help
+
+# Put the IDs of channels the bot should accept commands on here, separated by commas.
+# Leave blank to allow the bot to accept commands in all channels.
+channel_whitelist: 
+
+# Put whether the bot should react to its own messages.
+# Accepted are true and false (case sensitive); anything else defaults to false.
+react_to_self: false
+
+# Put whether the bot should react to messages sent by other bots.
+# Accepted are true and false (case sensitive); anything else defaults to true.
+react_to_bots: true
