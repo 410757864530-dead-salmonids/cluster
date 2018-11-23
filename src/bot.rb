@@ -25,9 +25,6 @@ module Bot
     exit(false)
   end
 
-  # Loads files from lib directory in parent
-  Dir['../lib/*.rb'].each { |l| puts l }
-
   # Creates the bot object. This is a constant in order to make it usable by crystals
   BOT = Discordrb::Commands::CommandBot.new(
     client_id:    config.id,
@@ -47,6 +44,9 @@ module Bot
 
   # Full path string for the crystal data folder (data in parent)
   DATA_PATH = File.expand_path('../data')
+
+  # Loads files from lib directory in parent
+  Dir['../lib/*.rb'].each { |l| load l }
 
   # Loads a crystal from the given file and includes the module into the bot's container.
   # 
