@@ -9,7 +9,7 @@ require 'yaml'
 # bot object through a constant, as well as a global rate limiter and data folder path constant
 module Bot
   # Loads bot configuration from file
-  config = OpenStruct.new(YAML.load_file('../config.yml'))
+  config = OpenStruct.new(YAML.load(File.open('../config.yml')))
 
   # Raises a RuntimeError for any missing required components and exits
   if config.id.nil?
@@ -26,15 +26,15 @@ module Bot
   end
 
   # Loads files from lib directory in parent
-  Dir['../lib'].each { |l| load l }
+  Dir['../lib/*.rb'].each { |l| puts l }
 
   # Creates the bot object. This is a constant in order to make it usable by crystals
   BOT = Discordrb::Commands::CommandBot.new(
     client_id:    config.id,
     token:        config.token,
     prefix:       config.prefix,
-    help_command: config.help_alias.to_sym,
-    channels:     config.channel_whitelist.split(',').map { |id| id.to_i },
+    help_command: config.help_alias ? config.help_alias.to_sym : nil,
+    channels:     config.channel_whitelist ? config.channel_whitelist.split(',').map { |id| id.to_i } : nil,
     parse_self:   config.react_to_self ? true : false,
     ignore_bots:  !config.react_to_bots ? true : false
   )
@@ -54,7 +54,6 @@ module Bot
   #   name in snake case, or this will not work! (The crystal template generator 
   #   will do this automatically.)
   def self.load_crystal(file)
-    return false unless File.extname(file.path) == '.rb'
     module_name = File.basename(file.path, '.*').split('_').map(&:capitalize).join
     load file
     BOT.include! self.const_get(module_name)
@@ -66,12 +65,12 @@ module Bot
   # --all, -a: Loads all crystals from both crystals/main and crystals/dev
   # NOTE: Multiple flags are not supported (or needed); only the first argument is read.
   if !ARGV[0] || %w(--main -m --all -a).include?(ARGV[0])
-    Dir['crystals/main'] do |file|
+    Dir['crystals/main/*.rb'].each do |file|
       load_crystal(file)
     end
   end
   if %w(--development -d --all -a).include?(ARGV[0])
-    Dir['crystals/dev'] do |file|
+    Dir['crystals/dev/*.rb'].each do |file|
       load_crystal(file)
     end
   end

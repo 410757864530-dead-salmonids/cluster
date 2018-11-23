@@ -2,4 +2,4 @@
 
 system("cd src; bundle install")
 
-require_relative 'src/bot.rb'
+system("cd src; ruby bot.rb")
