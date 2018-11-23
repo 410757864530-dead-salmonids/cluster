@@ -18,6 +18,11 @@ end
 # command line argument when running this program. The generated starter is placed 
 # in the dev directory.
 
+if ARGV.empty?
+  raise 'Crystal name not found!'
+  exit(false)
+end
+
 renderer = ERB.new(File.read('crystal_template.erb'))
 
 crystal_name = ARGV[0]
@@ -26,3 +31,5 @@ file_name = "#{crystal_name.snakeize}.rb"
 File.open("dev/#{file_name}", 'w') do |file|
   file.write(renderer.result)
 end
+
+puts "Generated new crystal #{crystal_name} at file dev/#{file_name.rb}"
