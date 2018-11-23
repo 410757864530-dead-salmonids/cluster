@@ -32,4 +32,4 @@ File.open("dev/#{file_name}", 'w') do |file|
   file.write(renderer.result)
 end
 
-puts "Generated new crystal #{crystal_name} at file dev/#{file_name.rb}"
+puts "Generated new crystal #{crystal_name} at file dev/#{file_name}"
