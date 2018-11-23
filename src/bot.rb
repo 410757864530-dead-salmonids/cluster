@@ -6,7 +6,7 @@ require 'yaml'
 
 # The main bot
 # All individual crystals will be submodules of this; this gives them access to the main 
-# bot object through a constant, as well as a global rate limiter and data folder path constant
+# bot object through a constant, as well as a constant containing the path to the data folder
 module Bot
   # Loads bot configuration from file
   config = OpenStruct.new(YAML.load(File.open('../config.yml')))
@@ -38,9 +38,6 @@ module Bot
 
   # Sets bot's playing game
   BOT.ready { BOT.game = config.game.to_s }
-
-  # Rate limiter object for use in all crystals
-  RATE_LIMITER = Discordrb::Commands::SimpleRateLimiter.new
 
   # Full path string for the crystal data folder (data in parent)
   DATA_PATH = File.expand_path('../data')
