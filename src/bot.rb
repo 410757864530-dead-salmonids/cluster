@@ -54,6 +54,7 @@ module Bot
     module_name = File.basename(file.path, '.*').split('_').map(&:capitalize).join
     load file
     BOT.include! self.const_get(module_name)
+    puts "Loaded crystal #{module_name}"
   end
 
   # Loads crystals depending on command line flags. Usage as follows:
