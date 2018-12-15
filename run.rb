@@ -2,4 +2,4 @@
 
 system("cd src; bundle install")
 
-system("cd src; ruby bot.rb")
+system("cd src; ruby bot.rb #{ARGV.join(' ')}")
