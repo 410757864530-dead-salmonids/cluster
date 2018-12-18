@@ -5,7 +5,7 @@ Cluster is a modular bot framework I made for [discordrb](https://github.com/mee
 I really only made it for two reasons:
 
 * To get my own personal bot projects more organized
-* To arm-wrestle with Yellow Diamond while the Crystal Gems deal with Blue
+* To function as a superweapon for the Diamond Authority after the failed colonization
 
 All individual modules, called crystals, are located in the `src/crystals` directory. The main folder contains all the crystals that are loaded by default, and the dev folder contains crystals that will be loaded either by themselves or alongside the main crystals as desired.
 
