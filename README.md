@@ -1,4 +1,4 @@
-# Cluster: A Clunky, Shoddily-Made, Cobbled-Together and Convoluted Modular Bot Framework for Discordrb
+# Cluster: A Clunky Modular Bot Framework for Discordrb
 
 Cluster is a modular bot framework I made for [discordrb](https://github.com/meew0/discordrb), partially inspired by [gemstone](https://github.com/z64/gemstone).
 
