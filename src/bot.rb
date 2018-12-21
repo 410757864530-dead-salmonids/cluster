@@ -21,7 +21,7 @@ module Bot
   config.webhook_commands = config.react_to_webhooks.class == TrueClass
   config.delete_field(:react_to_webhooks)
   config.ignore_bots = !config.react_to_bots
-  config.log_mode = %w(debug verbose normal quiet silent).include? config.log_mode ? config.log_mode.to_sym : :normal
+  config.log_mode = (%w(debug verbose normal quiet silent).include? config.log_mode) ? config.log_mode.to_sym : :normal
   config.fancy_log = config.fancy_log.class == TrueClass
   config.suppress_ready = !config.log_ready
   config.delete_field(:log_ready)
@@ -33,7 +33,6 @@ module Bot
   # Cleans up config struct by deleting all nil entries
   config = OpenStruct.new(config.to_h.reject { |_a, v| v.nil? })
 
-
   # Raises a RuntimeError for any missing required components and exits
   if config.client_id.nil?
     raise 'Client ID not found!'
@@ -44,7 +43,7 @@ module Bot
   if config.prefix.nil?
     raise 'Command prefix not found!'
   end
-  if config.id.nil? || config.token.nil? || config.prefix.nil?
+  if config.client_id.nil? || config.token.nil? || config.prefix.nil?
     exit(false)
   end
 
