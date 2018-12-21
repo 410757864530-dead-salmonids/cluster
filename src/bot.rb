@@ -8,11 +8,34 @@ require 'yaml'
 # All individual crystals will be submodules of this; this gives them access to the main 
 # bot object through a constant, as well as a constant containing the path to the data folder
 module Bot
-  # Loads bot configuration from file
-  config = OpenStruct.new(YAML.load(File.open('../config.yml')))
+  # Loads config file into struct and parses info into a format readable by CommandBot constructor
+  config = OpenStruct.new(YAML.load_file '../config.yml')
+  config.client_id = config.id
+  config.delete_field(:id)
+  config.type = (config.type == 'user') ? :user : :bot
+  config.parse_self = !!config.react_to_self
+  config.delete_field(:react_to_self)
+  config.help_command = config.help_alias || false
+  config.delete_field(:help_alias)
+  config.spaces_allowed = config.spaces_allowed.class == TrueClass
+  config.webhook_commands = config.react_to_webhooks.class == TrueClass
+  config.delete_field(:react_to_webhooks)
+  config.ignore_bots = !config.react_to_bots
+  config.log_mode = %w(debug verbose normal quiet silent).include? config.log_mode ? config.log_mode.to_sym : :normal
+  config.fancy_log = config.fancy_log.class == TrueClass
+  config.suppress_ready = !config.log_ready
+  config.delete_field(:log_ready)
+  config.redact_token = !(config.log_token.class == TrueClass)
+  config.delete_field(:log_token)
+  # Game is stored in a separate variable as it is not a bot attribute
+  game = config.game
+  config.delete_field(:game)
+  # Cleans up config struct by deleting all nil entries
+  config = OpenStruct.new(config.to_h.reject { |_a, v| v.nil? })
+
 
   # Raises a RuntimeError for any missing required components and exits
-  if config.id.nil?
+  if config.client_id.nil?
     raise 'Client ID not found!'
   end
   if config.token.nil?
@@ -25,22 +48,15 @@ module Bot
     exit(false)
   end
 
-  puts '==CLUSTER: A Shoddy Modular Ruby Bot Framework=='
+  puts '==CLUSTER: A Clunky Modular Ruby Bot Framework=='
   puts 'Initializing the bot object...'
 
-  # Creates the bot object. This is a constant in order to make it usable by crystals
-  BOT = Discordrb::Commands::CommandBot.new(
-    client_id:    config.id,
-    token:        config.token,
-    prefix:       config.prefix,
-    help_command: config.help_alias ? config.help_alias.to_sym : nil,
-    channels:     config.channel_whitelist ? config.channel_whitelist.split(',').map { |id| id.to_i } : nil,
-    parse_self:   config.react_to_self ? true : false,
-    ignore_bots:  !config.react_to_bots ? true : false
-  )
+  # Creates the bot object using the config attributes; this is a constant 
+  # in order to make it accessible by crystals
+  BOT = Discordrb::Commands::CommandBot.new(config.to_h)
 
   # Sets bot's playing game
-  BOT.ready { BOT.game = config.game.to_s }
+  BOT.ready { BOT.game = game.to_s }
 
   puts 'Done.'
 
@@ -89,7 +105,7 @@ module Bot
     puts 'Done.'
   end
 
-  puts 'Starting bot...'
+  puts "Starting bot with logging mode #{config.log_mode.to_s}..."
   BOT.ready { puts 'Bot started!' }
 
   # After loading all desired crystals, runs the bot
