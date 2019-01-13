@@ -35,6 +35,7 @@ desc 'Remove git repository files'
 task :remove_git do |event|
   FileUtils.remove_dir('.git')
   FileUtils.remove('.gitignore')
+  puts 'Removed repository files.'
 end
 
 desc 'Generate a new crystal in the src/dev folder (argument: crystal name in CamelCase)'
