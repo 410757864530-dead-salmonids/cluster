@@ -5,11 +5,9 @@ task :default => ['run:main']
 
 desc 'Install dependencies with bundle install command'
 task :dependencies do
-  Dir.chdir('src') do
-    unless system('bundle check')
-      puts "(Don't worry, cluster will handle this right now)"
-      system("bundle install")
-    end
+  unless system('bundle check')
+    puts "(Don't worry, cluster will handle this right now)"
+    system("bundle install")
   end
 end
 
