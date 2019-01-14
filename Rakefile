@@ -1,7 +1,7 @@
 require 'erb'
 require 'fileutils'
 
-task :default => ['run']
+task :default => ['run:main']
 
 desc 'Install dependencies with bundle install command'
 task :dependencies do
@@ -13,19 +13,30 @@ task :dependencies do
   end
 end
 
-desc 'Run the bot (default, options accepted: main, dev, all)'
-task :run, [:option] => ['dependencies'] do |event, args|
-  args.with_defaults(option: 'main')
-
-  # Changes directory to src
-  Dir.chdir('src') do
-    # Cases the argument and executes bot.rb depending on what argument was given
-    case args.option
-    when 'main'
+namespace :run do
+  desc 'Run the bot with the main crystals'
+  task :main => ['dependencies'] do |event|
+    # Changes directory to src
+    Dir.chdir('src') do
+      # Runs the main bot script with main argument
       system("ruby bot.rb main")
-    when 'dev'
+    end
+  end
+
+  desc 'Run the bot with the dev crystals'
+  task :dev => ['dependencies'] do |event|
+    # Changes directory to src
+    Dir.chdir('src') do
+      # Runs the main bot script with dev argument
       system("ruby bot.rb dev")
-    when 'all'
+    end
+  end
+
+  desc 'Run the bot with all crystals (main and dev)'
+  task :all => ['dependencies'] do |event|
+    # Changes directory to src
+    Dir.chdir('src') do
+      # Runs the main bot script with main and dev argument
       system("ruby bot.rb main dev")
     end
   end
@@ -33,8 +44,8 @@ end
 
 desc 'Remove git repository files'
 task :remove_git do |event|
-  FileUtils.remove_dir('.git')
-  FileUtils.remove('.gitignore')
+  FileUtils.remove_dir('.git') if Dir.exist? '.git'
+  FileUtils.remove('.gitignore') if File.exist? '.gitignore'
   puts 'Removed repository files.'
 end
 
