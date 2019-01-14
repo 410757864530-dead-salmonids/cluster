@@ -33,21 +33,23 @@ module Bot
   # Cleans up config struct by deleting all nil entries
   config = OpenStruct.new(config.to_h.reject { |_a, v| v.nil? })
 
-  # Raises a RuntimeError for any missing required components and exits
+  puts '==CLUSTER: A Clunky Modular Ruby Bot Framework=='
+
+  # Prints an error message to console for any missing required components and exits
   if config.client_id.nil?
-    raise 'Client ID not found!'
+    puts '- ERROR: Client ID not found in config.yml'
   end
   if config.token.nil?
-    raise 'Token not found!'
+    puts '- ERROR: Token not found in config.yml'
   end
-  if config.prefix.nil?
-    raise 'Command prefix not found!'
+  if config.prefix.empty?
+    puts '- ERROR: Command prefix not found in config.yml'
   end
-  if config.client_id.nil? || config.token.nil? || config.prefix.nil?
+  if config.client_id.nil? || config.token.nil? || config.prefix.empty?
+    puts 'Exiting.'
     exit(false)
   end
 
-  puts '==CLUSTER: A Clunky Modular Ruby Bot Framework=='
   puts 'Initializing the bot object...'
 
   # Creates the bot object using the config attributes; this is a constant 
