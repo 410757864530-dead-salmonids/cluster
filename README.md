@@ -18,7 +18,7 @@ To begin, clone this repository to your local machine, then run `rake remove_git
 
 To run a bot, fill in `config.yml` with all the necessary information and then execute `rake` on the command line.
 It will automatically load all crystals present in the `src/main` directory. To run crystals present in
-the `src/dev` directory, execute `rake run[dev]` for dev crystals exclusively and `rake run[all]` to run both
+the `src/dev` directory, execute `rake run:dev` for dev crystals exclusively and `rake run:all` to run both
 main and dev crystals.
 
 ## Installing a crystal
