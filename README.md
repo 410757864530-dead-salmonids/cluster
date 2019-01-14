@@ -29,8 +29,44 @@ do the same for `lib` if it is included as well.
 
 ## Developing a crystal
 
+### Generating a crystal
+
 For development of crystals, a simple crystal template is included in `src`. Simply run `rake generate[CrystalName]`,
 replacing `CrystalName` with the name of your crystal in CamelCase, and a starter crystal will be generated.
+
+### Coding a crystal
+
+A structure for a basic bot can be seen [here](https://github.com/meew0/discordrb#usage) -- crystals, however, have a
+slightly different structure as detailed below.
+
+#### Creating a command
+
+To define a command, call the instance method `command` within the module and fill in its parameters and block as
+necessary. 
+
+An example of a basic command definition looks like this:
+
+```ruby
+command :greet do |event|
+  "Hi, #{event.user.name}!"
+end
+```
+
+For details on the method, refer to its [documentation](https://meew0.github.io/discordrb/master/Discordrb/Commands/CommandContainer.html#command-instance_method).
+
+#### Creating an event handler
+
+To define an event handler, call its respective instance method within the module and fill in its parameters and block
+as necessary.
+
+An example of a basic event handler definition looks like this:
+```ruby
+member_join do |event|
+  puts "User #{event.user.name} has joined the server."
+end
+```
+
+For details on what event handlers are available, refer to the [docs](https://meew0.github.io/discordrb/master/Discordrb/EventContainer.html).
 
 ### Additional files
 
