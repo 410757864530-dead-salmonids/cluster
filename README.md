@@ -68,7 +68,13 @@ end
 
 For details on what event handlers are available, refer to the [docs](https://meew0.github.io/discordrb/master/Discordrb/EventContainer.html).
 
-### Additional files
+### Additional details
 
-If a crystal you are developing needs additional files to be loaded, they should be placed in the `lib` directory;
+The bot object is defined as a constant, `Bot::BOT`. As all crystals are submodules of the main module, `Bot`, they have
+access to this constant.
+
+If a crystal you are developing needs additional code to be loaded, they should be placed in the `lib` directory;
 all files in this directory are loaded prior to loading all crystals.
+
+A crystal's data files can be placed in the `data` directory; the constant `Bot::DATA_PATH` contains the path to said 
+directory, which all crystals have access to.
