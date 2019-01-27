@@ -15,7 +15,7 @@ module Bot
   config.type = (config.type == 'user') ? :user : :bot
   config.parse_self = !!config.react_to_self
   config.delete_field(:react_to_self)
-  config.help_command = config.help_alias || false
+  config.help_command = config.help_alias.empty? ? false : config.help_alias.map(&:to_sym)
   config.delete_field(:help_alias)
   config.spaces_allowed = config.spaces_allowed.class == TrueClass
   config.webhook_commands = config.react_to_webhooks.class == TrueClass

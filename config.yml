@@ -44,9 +44,9 @@ name:
 # Accepted are yes/true and no/false (case sensitive); anything else defaults to no.
 react_to_self: no
 
-# Put the alias of the help command here, i.e. what the help command should be called as.
+# Put all aliases of the help command within the brackets here, i.e. what the help command should be called as.
 # Leave blank to disable (e.g. if you have a custom implementation).
-help_alias: help
+help_alias: [help]
 
 # Put the message to be displayed when the user tries to use a nonexistent command here.
 # You can put the string '%command%' within the message to replace it with the command
